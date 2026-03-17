@@ -306,17 +306,54 @@ footer { text-align: center; padding: 2rem 0 1.5rem; font-size: .74rem; color: v
 
 /* ── RESPONSIVE ──────────────────────────────────── */
 @media (max-width: 720px) {
-  .hero-top { grid-template-columns: 1fr; text-align: center; }
-  .photo-outer { margin: 0 auto; }
-  .contacts { justify-content: center; }
-  .kpis { grid-template-columns: repeat(3,1fr); }
+  /* Nav — scrollable single line, no wrap */
+  nav { justify-content: flex-start; }
+  nav ul { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 .5rem; scrollbar-width: none; width: 100%; }
+  nav ul::-webkit-scrollbar { display: none; }
+  nav a { padding: .35rem .75rem; font-size: .68rem; white-space: nowrap; }
+
+  /* Wrap — tighter side margins */
+  .wrap { padding: 0 .75rem 2.5rem; }
+
+  /* Hero */
+  .hero { margin-top: 58px; border-radius: 14px; }
+  .hero-top { grid-template-columns: 1fr; text-align: center; gap: 1.4rem; padding: 2rem 1.5rem 1.5rem; }
+  .photo-outer { margin: 0 auto; width: 140px; height: 140px; }
+  .name { font-size: 2rem; }
+  .role { font-size: .68rem; letter-spacing: .13em; }
+  .contacts { justify-content: center; gap: .3rem .9rem; }
+  .contacts a, .contacts span { font-size: .76rem; }
+  .btn { margin: 0 auto; display: flex; justify-content: center; }
+
+  /* KPI band — 3 cols, last 2 centred */
+  .kpis { grid-template-columns: repeat(3, 1fr); }
+  .kpi { border-right: 1px solid var(--border); padding: 1.1rem .5rem; }
   .kpi:nth-child(3) { border-right: none; }
-  .job { grid-template-columns: 1fr; }
-  .job-body { border-left: none; padding-left: 0; border-top: 2px solid var(--border); padding-top: .9rem; margin-top: .5rem; }
-  .comp-grid { grid-template-columns: repeat(2,1fr); }
-  .edu-grid { grid-template-columns: 1fr; }
-  .content { padding: 0 1.5rem; }
-  nav a { padding: .35rem .6rem; font-size: .65rem; }
+  .kpi:nth-child(4) { border-right: 1px solid var(--border); grid-column: 1 / span 1; }
+  .kpi:nth-child(4), .kpi:nth-child(5) { border-top: 1px solid var(--border); }
+  .kpi-n { font-size: 1.5rem; }
+  .kpi-l { font-size: .62rem; }
+
+  /* Content card */
+  .content { padding: 0 1.2rem; border-radius: 14px; }
+  section { padding: 2.2rem 0; }
+
+  /* Experience */
+  .job { grid-template-columns: 1fr; gap: 0; margin-bottom: 2rem; }
+  .job-side { margin-bottom: .5rem; }
+  .job-body { border-left: none; padding-left: 0; border-top: 2px solid var(--border); padding-top: .9rem; margin-top: .4rem; }
+  .job-title { font-size: 1rem; }
+
+  /* Competencies — single column on small screens */
+  .comp-grid { grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .comp-card { padding: .8rem .85rem; }
+
+  /* Education */
+  .edu-grid { grid-template-columns: 1fr; gap: .85rem; }
+
+  /* Languages */
+  .lang-row { gap: .6rem; }
+  .lang-card { min-width: 90px; padding: .8rem 1rem; }
 }
 @media print {
   nav, .btn { display: none !important; }
@@ -617,7 +654,7 @@ const obs = new IntersectionObserver(entries => {
     const prefix = el.dataset.prefix || '';
     const dur = 1600, t0 = performance.now();
     (function tick(now) {
-      const p = Math.min((now - t0) / dur, 1);
+      const p = Math.min(Math.max((now - t0) / dur, 0), 1);
       const v = Math.floor((1 - Math.pow(1-p, 3)) * target);
       el.innerHTML = prefix + v + suffix;
       if (p < 1) requestAnimationFrame(tick);
