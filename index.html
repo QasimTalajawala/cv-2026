@@ -325,12 +325,13 @@ footer { text-align: center; padding: 2rem 0 1.5rem; font-size: .74rem; color: v
   .contacts a, .contacts span { font-size: .76rem; }
   .btn { margin: 0 auto; display: flex; justify-content: center; }
 
-  /* KPI band — 3 cols, last 2 centred */
-  .kpis { grid-template-columns: repeat(3, 1fr); }
-  .kpi { border-right: 1px solid var(--border); padding: 1.1rem .5rem; }
+  /* KPI band — flex wrap so last 2 centre automatically */
+  .kpis { display: flex; flex-wrap: wrap; justify-content: center; }
+  .kpi { flex: 0 0 33.33%; border-right: 1px solid var(--border); border-bottom: none; padding: 1.1rem .5rem; }
   .kpi:nth-child(3) { border-right: none; }
-  .kpi:nth-child(4) { border-right: 1px solid var(--border); grid-column: 1 / span 1; }
-  .kpi:nth-child(4), .kpi:nth-child(5) { border-top: 1px solid var(--border); }
+  .kpi:nth-child(4), .kpi:nth-child(5) { border-top: 1px solid var(--border); flex: 0 0 40%; }
+  .kpi:nth-child(4) { border-right: 1px solid var(--border); }
+  .kpi:nth-child(5) { border-right: none; }
   .kpi-n { font-size: 1.5rem; }
   .kpi-l { font-size: .62rem; }
 
